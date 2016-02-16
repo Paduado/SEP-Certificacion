@@ -1,0 +1,121 @@
+.sidebar-container{
+    position : fixed;
+    top : 5em;
+    left : 0;
+    background-color : #4b954e;
+    width: 15em;
+    height: 100vh;
+    overflow-y: auto;
+}
+.sidebar-nav {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+/********************************************************************************
+                                Sidebar options
+ ********************************************************************************/
+.sidebar-header{
+    display : block;
+    background-color : #4b954e;
+    color : white;
+    text-decoration : none;
+    width : 100%;
+}
+
+.sidebar-header label{
+    color : white;
+    padding-left: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+
+}
+.sidebar-header img{
+    width:2em;
+    height:2em;
+    margin-left: 1em;
+}
+
+.sidebar-nav-header, .sidebar-nav-header *
+{
+    cursor: pointer;
+}
+
+/********************************************************************************
+                                Sidebar item
+ ********************************************************************************/
+.sidebar-item {
+    display : block;
+    background-color : #54b15c;
+    color : white;
+    text-decoration : none;
+    width : 100%;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+.sidebar-item label{
+    color : white;
+    padding-left: 2em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    display : inline-block;
+}
+.sidebar-item img {
+    width:1.5em;
+    height:1.5em;
+    margin-right: 1em;
+    display : inline-block;
+}
+
+.sidebar-item:hover {
+    background-color: #3b853e;
+}
+
+.sidebar-nav p
+{
+    margin: 0;
+    display: inline-block;
+}
+
+/********************************************************************************
+                           Sidebar option selected
+ ********************************************************************************/
+.sidebar-item-selected {
+    display : block;
+    background-color : #1b752e;
+    color : white;
+    text-decoration : none;
+    width : 100%;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.sidebar-item-selected label{
+    color : white;
+    padding-left: 2em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+
+}
+.sidebar-item-selected img {
+    width:1.5em;
+    height:1.5em;
+    margin-right: 1em;
+}
+
+.new-application img {
+    width:1.5em;
+    height:1.5em;
+    margin-right: 1em;
+}
+a:visited {
+    color: white;
+}
+
+a:hover {
+    color: white;
+}
+.no-height{
+    max-height: 0px;
+}
