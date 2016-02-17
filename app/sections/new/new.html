@@ -6,7 +6,7 @@
             <div class="card-body">
                 <div layout="row" layout-align="center">
 
-                    <md-radio-group ng-model="application.type" ng-change="application.level = undefined; application.level = undefined">
+                    <md-radio-group ng-model="application.type" ng-change="application.level = undefined; application.profile = undefined">
                         <md-radio-button style="display: inline-block" value="1" class="md-primary">
                             General
                         </md-radio-button>
@@ -23,38 +23,9 @@
                         <md-input-container>
                             <label for="state">Entidad federativa:</label>
                             <md-select name="state" id="state" ng-model="application.state" ng-change="genderChanged()" required>
-                                <md-option value="01">Aguascalientes</md-option>
-                                <md-option value="02">Baja California</md-option>
-                                <md-option value="03">Baja California Sur</md-option>
-                                <md-option value="04">Campeche</md-option>
-                                <md-option value="05">Coahuila de Zaragoza</md-option>
-                                <md-option value="06">Colima</md-option>
-                                <md-option value="07">Chiapas</md-option>
-                                <md-option value="08">Chihuahua</md-option>
-                                <md-option value="09">Distrito Federal</md-option>
-                                <md-option value="10">Durango</md-option>
-                                <md-option value="11">Guanajuato</md-option>
-                                <md-option value="12">Guerrero</md-option>
-                                <md-option value="13">Hidalgo</md-option>
-                                <md-option value="14">Jalisco</md-option>
-                                <md-option value="15">México</md-option>
-                                <md-option value="16">Michoacán de Ocampo</md-option>
-                                <md-option value="17">Morelos</md-option>
-                                <md-option value="18">Nayarit</md-option>
-                                <md-option value="19">Nuevo León</md-option>
-                                <md-option value="20">Oaxaca</md-option>
-                                <md-option value="21">Puebla</md-option>
-                                <md-option value="22">Querétaro</md-option>
-                                <md-option value="23">Quintana Roo</md-option>
-                                <md-option value="24">San Luis Potosí</md-option>
-                                <md-option value="25">Sinaloa</md-option>
-                                <md-option value="26">Sonora</md-option>
-                                <md-option value="27">Tabasco</md-option>
-                                <md-option value="28">Tamaulipas</md-option>
-                                <md-option value="29">Tlaxcala</md-option>
-                                <md-option value="30">Veracruz de Ignacio de la Llave</md-option>
-                                <md-option value="31">Yucatán</md-option>
-                                <md-option value="32">Zacatecas</md-option>
+                                <md-option ng-repeat="state in states |orderBy:'name'" value="{{state.key}}">
+                                    {{state.name}}
+                                </md-option>
                             </md-select>
                             <ng-messages for="form.state.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
@@ -66,15 +37,20 @@
                     <div layout="column" flex="25" flex-offset="5">
                         <md-input-container>
                             <label for="level">Nivel educativo:</label>
-                            <md-select  name="level" id="level" ng-model="application.level" ng-change="application.profile = undefined" requiered>
-                                <md-option value="1" ng-show="application.type == 1">Educación Básica</md-option>
-                                <md-option value="2" ng-show="application.type == 1">Educación Media Superior</md-option>
-                                <md-option value="3" ng-show="application.type == 1">Técnico Superior Universitario</md-option>
-                                <md-option value="4" ng-show="application.type == 1">Educación Superior</md-option>
-                                <md-option value="5" ng-show="application.type == 2">Superior</md-option>
+                            <md-select name="level" id="level" ng-model="application.level" ng-change="application.profile = undefined" required>
+                                <md-option ng-value="1" ng-show="application.type == 1">Educación Básica
+                                </md-option>
+                                <md-option ng-value="2" ng-show="application.type == 1">Educación Media Superior
+                                </md-option>
+                                <md-option ng-value="3" ng-show="application.type == 1">Técnico Superior Universitario
+                                </md-option>
+                                <md-option ng-value="4" ng-show="application.type == 1">Educación Superior
+                                </md-option>
+                                <md-option ng-value="5" ng-show="application.type == 2">Superior
+                                </md-option>
 
                             </md-select>
-                            <ng-messages for="form.gender.$error">
+                            <ng-messages for="form.level.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
                             </ng-messages>
                             <div class="md-errors-spacer"></div>
@@ -84,11 +60,13 @@
                         <md-input-container>
 
                             <label for="profile">Perfin educativo:</label>
-                            <md-select  name="profile" id="profile" ng-model="application.profile" requiered>
-                                <md-option ng-repeat="profile in profiles |orderBy:'profile'" value="{{profile.profile}}" ng-click="application.profType = profile.profType" ng-show="application.level == profile.levelType">{{profile.profile}}</md-option>
+                            <md-select name="profile" id="profile" ng-model="application.profile" required>
+                                <md-option ng-repeat="profile in profiles |orderBy:'profile'" ng-value="profile.profile" ng-click="application.profType = profile.profType" ng-show="application.level == profile.levelType">
+                                    {{profile.profile}}
+                                </md-option>
                             </md-select>
 
-                            <ng-messages for="form.subgender.$error">
+                            <ng-messages for="form.profile.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
                             </ng-messages>
 
@@ -106,69 +84,62 @@
 
     <md-card>
         <div class="card-header">Documentos</div>
-        <div class="card-body">
-            <div layout="row">
+        <div class="card-body" style="padding:4em">
+            <!--<md-grid-list ng-show="application.level != undefined && application.profile != undefined" md-cols="3" md-row-height="6:5" md-gutter="4em">-->
 
-                <div layout="column" flex-offset="10" flex="20" dropfile prop="file1" indicator="progress1" class="drop-container" layout-align="end center">
-
-                    <h5>Acta de Nacimiento</h5>
-
-                    <div ng-show="application.file1 == ''" class="dropzone">Arrastre archivo o haga click</div>
-
-                    <div class="file-icon-container " ng-show="application.file1 != ''">
-                        <md-icon class="file-icon" md-svg-src="resources/icons/ic_insert_drive_file.svg"></md-icon>
-                        <md-icon class="delete-icon" md-svg-src="resources/icons/ic_delete_forever.svg">
-                            <md-tooltip md-direction="left">
-                                Eliminar
-                            </md-tooltip>
-                        </md-icon>
-                    </div>
-
-                    <md-progress-linear ng-show="progress1 != 0" md-mode="determinate" ng-value="progress1"></md-progress-linear>
-                    <div class="name"></div>
-
-                </div>
-                <div layout="column" flex-offset="10" flex="20" dropfile prop="file2" indicator="progress2" class="drop-container" layout-align="end center">
-
-                    <h5>CURP</h5>
-
-                    <div ng-show="application.file2 == ''" class="dropzone">Arrastre archivo o haga click</div>
-
-                    <div class="file-icon-container " ng-show="application.file2 != ''">
-                        <md-icon class="file-icon" md-svg-src="resources/icons/ic_insert_drive_file.svg"></md-icon>
-                        <md-icon class="delete-icon" md-svg-src="resources/icons/ic_delete_forever.svg">
-                            <md-tooltip md-direction="left">
-                                Eliminar
-                            </md-tooltip>
-                        </md-icon>
-                    </div>
-
-                    <md-progress-linear ng-show="progress2 != 0" md-mode="determinate" ng-value="progress2"></md-progress-linear>
-                    <div class="name"></div>
-
-                </div>
-                <div layout="column" flex-offset="10" flex="20" dropfile prop="file3" indicator="progress3" class="drop-container" layout-align="end center">
-
-                    <h5>Certificado</h5>
-
-                    <div ng-show="application.file3 == ''" class="dropzone">Arrastre archivo o haga click</div>
-
-                    <div class="file-icon-container " ng-show="application.file3 != ''">
-                        <md-icon class="file-icon" md-svg-src="resources/icons/ic_insert_drive_file.svg"></md-icon>
-                        <md-icon class="delete-icon" md-svg-src="resources/icons/ic_delete_forever.svg">
-                            <md-tooltip md-direction="left">
-                                Eliminar
-                            </md-tooltip>
-                        </md-icon>
-                    </div>
-
-                    <md-progress-linear ng-show="progress3 != 0" md-mode="determinate" ng-value="progress3"></md-progress-linear>
-                    <div class="name"></div>
-
-                </div>
+                <!--<md-grid-tile md-colspan="1" md-rowspan="1">-->
+                    <!--<div layout="column" class="dropfile" dropfile prop="acta" indicator="actaProgress">-->
+                        <!--<h5 layout="row" layout-align="center">Acta de Nacimiento</h5>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
+                <!--<md-grid-tile md-colspan="1" md-rowspan="1">-->
+                    <!--<div layout="column" class="dropfile" dropfile prop="curp" indicator="curpProgress">-->
+                        <!--<h5 layout="row" layout-align="center">CURP</h5>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
+                <!--<md-grid-tile ng-if="application.level != 2" md-colspan="1" md-rowspan="1">-->
+                    <!--<div layout="column" class="dropfile" dropfile prop="ident" indicator="identProgress">-->
+                        <!--<h5 layout="row" layout-align="center">Identificación Oficial</h5>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
+                <!--<md-grid-tile md-colspan="1" md-rowspan="1">-->
+                    <!--<div layout="column" class="dropfile" dropfile prop="certAnt" indicator="certAntProgress">-->
+                        <!--<h5 layout="row" layout-align="center">Certificado de Estudios</h5>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
+                <!--<md-grid-tile ng-if="application.level != 1 && application.level != 2" md-colspan="1" md-rowspan="1">-->
+                    <!--<div layout="column" class="dropfile" dropfile prop="constHon" indicator="constHonProgress">-->
+                        <!--<h5 layout="row" layout-align="center">Constancia de Honorabilidad</h5>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
+                <!--<md-grid-tile ng-if="application.level != 1 && application.level != 2" md-colspan="1" md-rowspan="1">-->
+                    <!--<div layout="column" class="dropfile" dropfile prop="cv" indicator="cvProgress">-->
+                        <!--<h5 layout="row" layout-align="center">Currículum</h5>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
+                <!--<md-grid-tile ng-if="application.profType == 4 || application.profType == 5 || application.profType == 6 || application.profType == 9" md-colspan="1" md-rowspan="1">-->
+                    <!--<div layout="column" class="dropfile" dropfile prop="const" indicator="constProgress">-->
+                        <!--<h5 layout="row" layout-align="center">Constancia de Estudios</h5>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
+                <!--<md-grid-tile ng-if="application.profType == 8" md-colspan="1" md-rowspan="1">-->
+                    <!--<div layout="column" class="dropfile" dropfile prop="constLab" indicator="constLabProgress">-->
+                        <!--<h5 layout="row" layout-align="center">Constancia Laboral</h5>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
+                <!--<md-grid-tile ng-if="application.profType == 9" md-colspan="1" md-rowspan="1">-->
+                    <!--<div layout="column" class="dropfile" dropfile prop="certComp" indicator="certCompProgress">-->
+                        <!--<h5 layout="row" layout-align="center">Certificado de Competencia Laboral</h5>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
+                <!--<md-grid-tile ng-if="application.profType == 9" md-colspan="1" md-rowspan="1">-->
+                    <!--<div layout="column" class="dropfile" dropfile prop="port" indicator="portProgress">-->
+                        <!--<h5 layout="row" layout-align="center">Portafolio</h5>-->
+                    <!--</div>-->
+                <!--</md-grid-tile>-->
 
 
-            </div>
+            <!--</md-grid-list>-->
         </div>
     </md-card>
 
@@ -179,4 +150,4 @@
     </div>
 </div>
 
-<input data-prop="hola" style="display: none" id="input-file" type="file">
+<input style="display: none" id="input-file" type="file">

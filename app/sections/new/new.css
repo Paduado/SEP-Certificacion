@@ -26,5 +26,10 @@ select.custom-input{
     background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 90% 50%;
 }
 
+/*md-grid-list md-grid-tile figure{
+    display:block !important;
+    text-align: center;
+}*/
+
 
 
