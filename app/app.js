@@ -103,7 +103,7 @@ angular.module('myApp', [
             });
         };
     })
-    .run(function ($rootScope, $location)
+    .run(["$rootScope", "$location", "$mdDialog", function ($rootScope, $location, $mdDialog)
     {
         $rootScope.$on( "$routeChangeStart", function(event, next, current)
         {
@@ -119,15 +119,38 @@ angular.module('myApp', [
             }
             else
             {
-
-                $rootScope.userType = localStorage.getItem("userType");
-                if((next.templateUrl == "login/login.html")||(next.templateUrl == "signup/signup.html")||(next.templateUrl == "signup/verify.html"))
+                if(localStorage.getItem("userProfileIsComplete") === null)
                 {
-                    $location.path("/applications/search");
+                    if(next.templateUrl != "sections/profile/profile.html")
+                    {
+                        $location.path("/profile");
+                    }
+                    else
+                    {
+                        $mdDialog.show(
+                            $mdDialog.alert()
+                            .parent(angular.element(document.querySelector('body')))
+                            .title('Por favor, actualiza tus datos!')
+                            .textContent("")
+                            .ariaLabel('Update User Data')
+                            .ok('OK')
+                        )
+                        .then(function()
+                        {
+                        });
+                    }
+                }
+                else
+                {
+                    $rootScope.userType = localStorage.getItem("userType");
+                    if((next.templateUrl == "login/login.html")||(next.templateUrl == "signup/signup.html")||(next.templateUrl == "signup/verify.html"))
+                    {
+                        $location.path("/applications/search");
+                    }
                 }
             }
         });
-    });
+    }]);
 
 AWS.config.region = 'us-east-1'; // Region
 if(localStorage.getItem("userIsLoggedIn") === null)
