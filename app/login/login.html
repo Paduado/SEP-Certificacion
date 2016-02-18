@@ -23,7 +23,11 @@
 		</div>
 
 		<div class="login-button">
-			<md-button type="submit" class="md-raised md-primary">Iniciar Sesión</md-button>
+			<md-button type="submit" ng-disabled="loggingIn" class="md-raised md-primary"><span ng-if="!loggingIn">Iniciar Sesión</span><span ng-if="loggingIn"><li class="fa fa-circle-o-notch fa-spin"></li></span></md-button>
+		</div>
+
+		<div class="login-signup-button">
+			<md-button type="submit" class="md-raised md-primary" ng-click="go('/signup');">Registrarme</md-button>
 		</div>
 
 		<p ng-class="invalidLogin?'login-invalid-credentials-show':'login-invalid-credentials-hide'">Credenciales Inválidas</p>
