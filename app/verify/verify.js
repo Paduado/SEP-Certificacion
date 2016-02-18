@@ -1,58 +1,85 @@
 'use strict';
 
-angular.module('myApp.signup', ['ngRoute'])
+angular.module('myApp.verify', ['ngRoute','ngMaterial'])
     .config(['$routeProvider', function ($routeProvider)
     {
-        $routeProvider.when('/signup/:email/:code', {
-            templateUrl: 'signup/signup.html'
+        $routeProvider.when('/verify/:email/:token', {
+            templateUrl: 'verify/verify.html'
         });
     }])
-    .controller('signupController',["$scope","$routeParams","$location","$rootScope", function ($scope,$routeParams,$location)
+    .controller('verifyController',["$scope","$routeParams","$location","$rootScope","$mdDialog", function ($scope,$routeParams,$location,$rootScope,$mdDialog)
     {
     	var that = this;
     	$scope.email = "";
     	$scope.password = "";
-    	$scope.signingUp = false;
-    	$scope.invalidSignUp = false;
-    	that.handleSignUpResponse = function(err, data)
+    	that.verifyResponseHandler = function(err, data)
     	{
     		$scope.$apply(function()
     		{
-				$scope.signingUp = false
 				if(err)
 				{
-					$scope.invalidSignUp = true;
 					console.log(err, err.stack);
+					$mdDialog.show(
+						$mdDialog.alert()
+						.parent(angular.element(document.querySelector('body')))
+						.title('Revisa tu conexión a internet!')
+						.textContent(err)
+						.ariaLabel('Register Error')
+						.ok('OK')
+					)
+					.then(function()
+					{
+						$location.path("/login");
+					});
 				}
 				else
 				{
 					var output = JSON.parse(data.Payload);
-					if (!output.register) {
-						$scope.invalidSignUp = true;
+					if (!output.verified) {
+						$mdDialog.show(
+							$mdDialog.alert()
+							.parent(angular.element(document.querySelector('.verify-container')))
+							.title('Tu código ha expirado!')
+							.textContent("")
+							.ariaLabel('Register Error')
+							.ok('OK')
+						)
+						.then(function()
+						{
+							$location.path("/login");
+						});
 					}
 					else
 					{
+						$mdDialog.show(
+							$mdDialog.alert()
+							.parent(angular.element(document.querySelector('.verify-container')))
+							.title('Ya puedes iniciar sesión!')
+							.textContent("")
+							.ariaLabel('Register Error')
+							.ok('OK')
+						)
+						.then(function()
+						{
+							$location.path("/login");
+						});
 					}
 				}
 			});
 		};
-		$scope.test = function()
-		{
-			console.log($routeParams.email);
-		}
-    	$scope.doSignUp = function()
+    	$scope.doVerify = function()
     	{
-    		$scope.invalidSignUp = false;
   			var lambda = new AWS.Lambda();
   			var input ={
-				email: $scope.email,
-				password: $scope.password
+				email: $routeParams.email,
+				token: $routeParams.token
 			};
-			$scope.loggingIn = true;
   			lambda.invoke({
-				FunctionName: 'SEPCertificacionUserRegister',
+				FunctionName: 'SEPCertificacionUserVerify',
 				Payload: JSON.stringify(input)
-			}, that.handleSignUpResponse);
+			}, that.verifyResponseHandler);
     	};
-
+    	$scope.$watch('$viewContentLoaded', function(){
+			$scope.doVerify();
+		});
     }]);

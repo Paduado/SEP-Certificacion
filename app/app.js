@@ -9,6 +9,7 @@ angular.module('myApp', [
         'topBar',
         'myApp.login',
         'myApp.signup',
+        'myApp.verify',
         'myApp.profile',
         'myApp.myapps',
         'myApp.new',
@@ -111,7 +112,7 @@ angular.module('myApp', [
                 $rootScope.userType = 0;
                 console.log(next.redirectTo);
                 console.log(next.templateUrl);
-                if((next.templateUrl != "login/login.html")&&(next.templateUrl != "signup/signup.html")&&(next.templateUrl != "signup/verify.html"))
+                if((next.templateUrl != "login/login.html")&&(next.templateUrl != "signup/signup.html")&&(next.templateUrl != "verify/verify.html"))
                 {
                     $location.path("/login");
                 }

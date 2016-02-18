@@ -57,7 +57,11 @@ angular.module('myApp.signup', ['ngRoute','ngMaterial'])
 							.textContent('Recibiras un correo de confirmación para poder iniciar sesión')
 							.ariaLabel('Register Success')
 							.ok('OK')
-						);
+						)
+						.then(function()
+						{
+							$location.path("/login");
+						});
 					}
 				}
 			});
