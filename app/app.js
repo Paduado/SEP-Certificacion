@@ -18,6 +18,7 @@ angular.module('myApp', [
     ])
     .config(['$routeProvider', function ($routeProvider)
     {
+        $routeProvider.otherwise({redirectTo: '/applications/search'});
     }])
     .config(function ($mdThemingProvider)
     {
@@ -102,14 +103,13 @@ angular.module('myApp', [
     })
     .run(function ($rootScope, $location)
     {
-        // register listener to watch route changes
-        $rootScope.$on("$routeChangeStart", function (event, next, current)
+        $rootScope.$on( "$routeChangeStart", function(event, next, current)
         {
-            if (localStorage.getItem("userIsLoggedIn") === null)
+            if(localStorage.getItem("userIsLoggedIn") === null)
             {
                 $rootScope.userType = 0;
                 console.log(next.redirectTo);
-                if (next.templateUrl != "login/login.html")
+                if((next.templateUrl != "login/login.html")||(next.templateUrl != "signup/signup.html")||(next.templateUrl != "signup/validate.html"))
                 {
                     $location.path("/login");
                 }
@@ -118,19 +118,55 @@ angular.module('myApp', [
             {
 
                 $rootScope.userType = localStorage.getItem("userType");
-                console.log(next.redirectTo);
-                console.log(event.redirectTo);
-                if (next.templateUrl == "login/login.html")
+                if((next.templateUrl == "login/login.html")||(next.templateUrl == "signup/signup.html")||(next.templateUrl == "signup/validate.html"))
                 {
                     $location.path("/applications/search");
                 }
-
             }
         });
     });
 
 AWS.config.region = 'us-east-1'; // Region
-var creds = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: 'us-east-1:6e0e3192-e60d-4a54-9462-0c129e539d2c'
-});
-AWS.config.credentials = creds;
+if(localStorage.getItem("userIsLoggedIn") === null)
+{
+    var creds = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: 'us-east-1:3739a41c-3af8-47ec-a594-b33f602815c9'
+    });
+    AWS.config.credentials = creds;
+}
+else
+{
+    var creds = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: 'us-east-1:3739a41c-3af8-47ec-a594-b33f602815c9'
+    });
+    AWS.config.credentials = creds;
+
+    creds.params.IdentityPoolId = localStorage.getItem("identityPoolID");
+    creds.params.IdentityId = localStorage.getItem("identityID");
+    creds.params.Logins = {
+        'cognito-identity.amazonaws.com': localStorage.getItem("token")
+    };
+    creds.expired = true;
+    AWS.config.credentials.get(function(err)
+    {
+        if(err)
+        {
+            //Token Expired
+            console.log(err, err.stack);
+            localStorage.clear();
+            location.reload();
+        }
+    });
+}
+
+var options = {
+    appId : 'bef1447450494562953788476c2d0719', //Amazon Mobile Analytics App ID
+    appTitle : "SEPCertificacion",
+    appVersionName : "0.1",
+    appVersionCode : "1",
+    appPackageName : "sep.smartplace.mx"
+};
+
+var mobileAnalyticsClient = new AMA.Manager(options);
+
+mobileAnalyticsClient.submitEvents();
