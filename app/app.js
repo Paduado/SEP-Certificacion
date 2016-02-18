@@ -8,6 +8,8 @@ angular.module('myApp', [
         'sidebarMenu',
         'topBar',
         'myApp.login',
+        'myApp.signup',
+        'myApp.verify',
         'myApp.profile',
         'myApp.myapps',
         'myApp.new',
@@ -109,7 +111,8 @@ angular.module('myApp', [
             {
                 $rootScope.userType = 0;
                 console.log(next.redirectTo);
-                if((next.templateUrl != "login/login.html")||(next.templateUrl != "signup/signup.html")||(next.templateUrl != "signup/validate.html"))
+                console.log(next.templateUrl);
+                if((next.templateUrl != "login/login.html")&&(next.templateUrl != "signup/signup.html")&&(next.templateUrl != "verify/verify.html"))
                 {
                     $location.path("/login");
                 }
@@ -118,7 +121,7 @@ angular.module('myApp', [
             {
 
                 $rootScope.userType = localStorage.getItem("userType");
-                if((next.templateUrl == "login/login.html")||(next.templateUrl == "signup/signup.html")||(next.templateUrl == "signup/validate.html"))
+                if((next.templateUrl == "login/login.html")||(next.templateUrl == "signup/signup.html")||(next.templateUrl == "signup/verify.html"))
                 {
                     $location.path("/applications/search");
                 }

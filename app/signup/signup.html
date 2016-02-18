@@ -1,0 +1,36 @@
+<div ng-controller="signupController" class="signup-container">
+	<img class="signup-logo" src="resources/img/seploginlogo.png">
+	<form name="form" ng-submit="doSignUp()">
+		<div class="signup-email">
+			<md-input-container>
+	            <label for="email">Email</label>
+	            <input class="signup-input" type="email" id="signupemail" name="signupemail" ng-model="email" required>
+	            <ng-messages for="form.signupemail.$error">
+	                <ng-message when="email">Campo requerido</ng-message>
+	            </ng-messages>
+	            <div class="md-errors-spacer"></div>
+	        </md-input-container>
+		</div>
+		<div class="signup-password">
+			<md-input-container>
+	            <label for="password">Contraseña</label>
+	            <input class="signup-input" type="password" id="signuppassword" name="signuppassword" ng-model="password" required>
+	            <ng-messages for="form.signuppassword.$error">
+	                <ng-message when="required">Campo requerido</ng-message>
+	            </ng-messages>
+	            <div class="md-errors-spacer"></div>
+	        </md-input-container>
+		</div>
+
+		<div class="signup-button">
+			<md-button type="submit" ng-disabled="signingUp" class="md-raised md-primary"><span ng-if="!signingUp">Registrarme</span><span ng-if="signingUp"><li class="fa fa-circle-o-notch fa-spin"></li></span></md-button>
+		</div>
+
+		<div class="signup-cancel-button">
+			<md-button type="submit" class="md-raised md-primary" ng-click="go('/login');">Volver</md-button>
+		</div>
+
+		<p ng-class="invalidsignup?'signup-invalid-credentials-show':'signup-invalid-credentials-hide'">Credenciales Inválidas</p>
+
+	</form>
+</div>
