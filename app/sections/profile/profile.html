@@ -7,7 +7,7 @@
                     <div layout="column" flex="40">
                         <md-input-container>
                             <label for="lastname1">Apellido paterno:</label>
-                            <input type="text" id="lastname1" name="lastname1" ng-model="application.lastname1"
+                            <input type="text" id="lastname1" name="lastname1" ng-model="user.lastname1"
                                    required>
                             <ng-messages for="form.lastname1.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
@@ -16,7 +16,7 @@
 
                         <md-input-container>
                             <label for="lastname2">Apellido materno:</label>
-                            <input type="text" id="lastname2" name="lastname2" ng-model="application.lastname2"
+                            <input type="text" id="lastname2" name="lastname2" ng-model="user.lastname2"
                                    required>
                             <ng-messages for="form.lastname2.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
@@ -25,7 +25,7 @@
 
                         <md-input-container>
                             <label for="firstname">Nombre:</label>
-                            <input type="text" id="firstname" name="firstname" ng-model="application.firstname"
+                            <input type="text" id="firstname" name="firstname" ng-model="user.firstname"
                                    required>
                             <ng-messages for="form.firstname.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
@@ -37,7 +37,7 @@
 
                         <md-input-container>
                             <label for="sex">Género:</label>
-                            <md-select name="sex" id="sex" ng-model="application.sex" required
+                            <md-select name="sex" id="sex" ng-model="user.sex" required
                                        ng-style="sex==''?{'color':'#aaa'}:{'color':'#000'}">
                                 <md-option value="m">Masculino</md-option>
                                 <md-option value="f">Femenino</md-option>
@@ -51,7 +51,7 @@
 
                         <md-input-container>
                             <label for="birthdate">Fecha de nacimiento:</label>
-                            <input type="text" id="birthdate" name="birthdate" ng-model="application.birthdate" required
+                            <input type="text" id="birthdate" name="birthdate" ng-model="user.birthdate" required
                                    readonly>
                             <ng-messages for="form.birthdate.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
@@ -60,7 +60,7 @@
 
                         <md-input-container>
                             <label for="curp">CURP:</label>
-                            <input type="text" id="curp" name="curp" ng-model="application.curp" required>
+                            <input type="text" id="curp" name="curp" ng-model="user.curp" required>
                             <ng-messages for="form.curp.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
                             </ng-messages>
@@ -78,14 +78,14 @@
                     <div layout="column" flex="40">
                         <md-input-container>
                             <label for="email">Correo electrónico:</label>
-                            <input type="email" id="email" name="email" ng-model="application.email" multiple required>
+                            <input type="email" id="email" name="email" ng-model="user.email" multiple required>
                             <ng-messages for="form.email.$error" role="alert">
                                 <ng-message when="email,required">Email inválido</ng-message>
                             </ng-messages>
                         </md-input-container>
                         <md-input-container>
                             <label for="email">Confirmar correo electrónico:</label>
-                            <input type="email" id="email2" name="email2" ng-model="application.email2" multiple required
+                            <input type="email" id="email2" name="email2" ng-model="user.email2" multiple required
                                    ui-validate="'$value==email'"
                                    ui-validate-watch="'email'">
                             <ng-messages for="form.email2.$error" role="alert">
@@ -96,14 +96,14 @@
                     <div layout="column" flex="40" flex-offset="10">
                         <md-input-container>
                             <label for="cell">Celular:</label>
-                            <input type="text" id="cell" name="cell" ng-model="application.cell" required>
+                            <input type="text" id="cell" name="cell" ng-model="user.cell" required>
                             <ng-messages for="form.cell.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
                             </ng-messages>
                         </md-input-container>
                         <md-input-container>
                             <label for="phone">Teléfono fijo:</label>
-                            <input type="text" id="phone" name="phone" ng-model="application.phone" required>
+                            <input type="text" id="phone" name="phone" ng-model="user.phone" required>
                             <ng-messages for="form.phone.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
                             </ng-messages>
@@ -120,14 +120,14 @@
                     <div layout="column" flex="40">
                         <md-input-container>
                             <label for="country">Pais:</label>
-                            <input type="text" id="country" name="country" ng-model="application.country" required>
+                            <input type="text" id="country" name="country" ng-model="user.country" required>
                             <ng-messages for="form.country.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
                             </ng-messages>
                         </md-input-container>
 
                         <md-input-container><label for="state">Estado:</label>
-                            <input type="text" id="state" name="state" ng-model="application.state" required>
+                            <input type="text" id="state" name="state" ng-model="user.state" required>
                             <ng-messages for="form.state.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
                             </ng-messages>
@@ -135,7 +135,7 @@
 
                         <md-input-container>
                             <label for="city">Municipio:</label>
-                            <input type="text" id="city" name="city" ng-model="application.city" required>
+                            <input type="text" id="city" name="city" ng-model="user.city" required>
                             <ng-messages for="form.city.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
                             </ng-messages>
@@ -143,7 +143,7 @@
 
                         <md-input-container>
                             <label for="colony">Colonia:</label>
-                            <input type="text" id="colony" name="colony" ng-model="application.colony" required>
+                            <input type="text" id="colony" name="colony" ng-model="user.colony" required>
                             <ng-messages for="form.colony.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
                             </ng-messages>
@@ -153,7 +153,7 @@
 
                         <md-input-container>
                             <label for="street">Calle:</label>
-                            <input type="text" id="street" name="street" ng-model="application.street" required>
+                            <input type="text" id="street" name="street" ng-model="user.street" required>
                             <ng-messages for="form.street.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
                             </ng-messages>
@@ -161,7 +161,7 @@
 
                         <md-input-container>
                             <label for="cp">C.P:</label>
-                            <input type="text" id="cp" name="cp" ng-model="application.cp" required>
+                            <input type="text" id="cp" name="cp" ng-model="user.cp" required>
                             <ng-messages for="form.cp.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
                             </ng-messages>
@@ -169,7 +169,7 @@
 
                         <md-input-container>
                             <label for="number">Número:</label>
-                            <input type="text" id="number" name="number" ng-model="application.number" required>
+                            <input type="text" id="number" name="number" ng-model="user.number" required>
                             <ng-messages for="form.number.$error">
                                 <ng-message when="required">Campo requerido</ng-message>
                             </ng-messages>

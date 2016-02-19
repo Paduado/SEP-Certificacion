@@ -55,6 +55,8 @@ angular.module('myApp.login', ['ngRoute','ngMaterial'])
 						localStorage.setItem("identityID", output.identityId);
 						localStorage.setItem("identityPoolID", output.identityPoolID);
 						localStorage.setItem("token", output.token);
+						localStorage.setItem("userProfileIsComplete", output.userProfileIsComplete);
+						localStorage.setItem("currentUserData", output.currentUserData);
 
 						$mdDialog.show(
 							$mdDialog.alert()
@@ -80,6 +82,7 @@ angular.module('myApp.login', ['ngRoute','ngMaterial'])
     	$scope.doLogin = function()
     	{
     		$scope.invalidLogin = false;
+    		localStorage.setItem("userEmail", $scope.email);
   			var lambda = new AWS.Lambda();
   			var input ={
 				email: $scope.email,
