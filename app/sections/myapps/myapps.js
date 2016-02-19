@@ -15,13 +15,20 @@ angular.module('myApp.myapps', ['ngRoute', 'smart-table'])
 
 
         var params = {
-            TableName: "applications"
+            TableName: "applications",
+            "IndexName": "userID-index",
+            KeyConditionExpression: "#a = :a",
+            ExpressionAttributeNames:{
+                "#a": "userID"
+            },
+            ExpressionAttributeValues: {
+                ":a":localStorage.getItem("identityID")
+            }
         };
 
         var docClient = new AWS.DynamoDB.DocumentClient();
-        docClient.scan(params, onScan);
 
-        function onScan(err, data)
+        docClient.query(params,function (err, data)
         {
             if (err)
             {
@@ -39,7 +46,7 @@ angular.module('myApp.myapps', ['ngRoute', 'smart-table'])
                     docClient.scan(params, onScan);
                 }
             }
-        }
+        });
 
         $scope.formatDate = function (timestamp)
         {
@@ -61,19 +68,44 @@ angular.module('myApp.myapps', ['ngRoute', 'smart-table'])
             switch (status)
             {
                 case 1:
-                    return "Pendiente";
+                    return "No enviada";
                 case 2:
-                    return "Aceptado";
+                    return "Pendiente";
                 case 3:
+                    return "Aceptado";
+                case 4:
                     return "Rechazado";
+            }
+        };
+        $scope.getType = function(type)
+        {
+            switch (type)
+            {
+                case 1:
+                    return "Educación Básica";
+
+                case 2:
+                    return "Educación Media Superior";
+
+                case 3:
+                    return "Técnico Superior Universitario";
+
+                case 4:
+                    return "Educación Superior";
+
+                case 5:
+                    return "Superior";
+                default:
+                    return "";
+
             }
         };
 
 
-        $scope.openDetails = function (app)
+        $scope.openDetails = function (appId)
         {
-            $rootScope.application = app;
-            $scope.go('/applications/review')
+            $rootScope.application = appId;
+            $scope.go('/applications/review/'+appId);
         };
 
 
