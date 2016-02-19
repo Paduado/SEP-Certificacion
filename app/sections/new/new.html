@@ -85,68 +85,75 @@
     <md-card>
         <div class="card-header">Documentos</div>
         <div class="card-body" style="padding:4em">
-            <!--<md-grid-list ng-show="application.level != undefined && application.profile != undefined" md-cols="3" md-row-height="6:5" md-gutter="4em">-->
+            <md-grid-list ng-show="application.level != undefined && application.profile != undefined" md-cols="3" md-row-height="6:5" md-gutter="4em">
 
-                <!--<md-grid-tile md-colspan="1" md-rowspan="1">-->
-                    <!--<div layout="column" class="dropfile" dropfile prop="acta" indicator="actaProgress">-->
-                        <!--<h5 layout="row" layout-align="center">Acta de Nacimiento</h5>-->
-                    <!--</div>-->
-                <!--</md-grid-tile>-->
-                <!--<md-grid-tile md-colspan="1" md-rowspan="1">-->
-                    <!--<div layout="column" class="dropfile" dropfile prop="curp" indicator="curpProgress">-->
-                        <!--<h5 layout="row" layout-align="center">CURP</h5>-->
-                    <!--</div>-->
-                <!--</md-grid-tile>-->
-                <!--<md-grid-tile ng-if="application.level != 2" md-colspan="1" md-rowspan="1">-->
-                    <!--<div layout="column" class="dropfile" dropfile prop="ident" indicator="identProgress">-->
-                        <!--<h5 layout="row" layout-align="center">Identificación Oficial</h5>-->
-                    <!--</div>-->
-                <!--</md-grid-tile>-->
-                <!--<md-grid-tile md-colspan="1" md-rowspan="1">-->
-                    <!--<div layout="column" class="dropfile" dropfile prop="certAnt" indicator="certAntProgress">-->
-                        <!--<h5 layout="row" layout-align="center">Certificado de Estudios</h5>-->
-                    <!--</div>-->
-                <!--</md-grid-tile>-->
-                <!--<md-grid-tile ng-if="application.level != 1 && application.level != 2" md-colspan="1" md-rowspan="1">-->
-                    <!--<div layout="column" class="dropfile" dropfile prop="constHon" indicator="constHonProgress">-->
-                        <!--<h5 layout="row" layout-align="center">Constancia de Honorabilidad</h5>-->
-                    <!--</div>-->
-                <!--</md-grid-tile>-->
-                <!--<md-grid-tile ng-if="application.level != 1 && application.level != 2" md-colspan="1" md-rowspan="1">-->
-                    <!--<div layout="column" class="dropfile" dropfile prop="cv" indicator="cvProgress">-->
-                        <!--<h5 layout="row" layout-align="center">Currículum</h5>-->
-                    <!--</div>-->
-                <!--</md-grid-tile>-->
-                <!--<md-grid-tile ng-if="application.profType == 4 || application.profType == 5 || application.profType == 6 || application.profType == 9" md-colspan="1" md-rowspan="1">-->
-                    <!--<div layout="column" class="dropfile" dropfile prop="const" indicator="constProgress">-->
-                        <!--<h5 layout="row" layout-align="center">Constancia de Estudios</h5>-->
-                    <!--</div>-->
-                <!--</md-grid-tile>-->
-                <!--<md-grid-tile ng-if="application.profType == 8" md-colspan="1" md-rowspan="1">-->
-                    <!--<div layout="column" class="dropfile" dropfile prop="constLab" indicator="constLabProgress">-->
-                        <!--<h5 layout="row" layout-align="center">Constancia Laboral</h5>-->
-                    <!--</div>-->
-                <!--</md-grid-tile>-->
-                <!--<md-grid-tile ng-if="application.profType == 9" md-colspan="1" md-rowspan="1">-->
-                    <!--<div layout="column" class="dropfile" dropfile prop="certComp" indicator="certCompProgress">-->
-                        <!--<h5 layout="row" layout-align="center">Certificado de Competencia Laboral</h5>-->
-                    <!--</div>-->
-                <!--</md-grid-tile>-->
-                <!--<md-grid-tile ng-if="application.profType == 9" md-colspan="1" md-rowspan="1">-->
-                    <!--<div layout="column" class="dropfile" dropfile prop="port" indicator="portProgress">-->
-                        <!--<h5 layout="row" layout-align="center">Portafolio</h5>-->
-                    <!--</div>-->
-                <!--</md-grid-tile>-->
+                <md-grid-tile md-colspan="1" md-rowspan="1">
+                    <div layout="column" class="dropfile" dropfile prop="acta" indicator="actaProgress">
+                        <h5 layout="row" layout-align="center">Acta de Nacimiento</h5>
+                    </div>
+                </md-grid-tile>
+                <md-grid-tile md-colspan="1" md-rowspan="1">
+                    <div layout="column" class="dropfile" dropfile prop="curp" indicator="curpProgress">
+                        <h5 layout="row" layout-align="center">CURP</h5>
+                    </div>
+                </md-grid-tile>
+                <md-grid-tile ng-if="application.level != 2" md-colspan="1" md-rowspan="1">
+                    <div layout="column" class="dropfile" dropfile prop="ident" indicator="identProgress">
+                        <h5 layout="row" layout-align="center">Identificación Oficial</h5>
+                    </div>
+                </md-grid-tile>
+                <md-grid-tile md-colspan="1" md-rowspan="1">
+                    <div layout="column" class="dropfile" dropfile prop="certAnt" indicator="certAntProgress">
+                        <h5 layout="row" layout-align="center">Certificado de Estudios</h5>
+                    </div>
+                </md-grid-tile>
+                <md-grid-tile ng-if="application.level != 1 && application.level != 2" md-colspan="1" md-rowspan="1">
+                    <div layout="column" class="dropfile" dropfile prop="constHon" indicator="constHonProgress">
+                        <h5 layout="row" layout-align="center">Constancia de Honorabilidad</h5>
+                    </div>
+                </md-grid-tile>
+                <md-grid-tile ng-if="application.level != 1 && application.level != 2" md-colspan="1" md-rowspan="1">
+                    <div layout="column" class="dropfile" dropfile prop="cv" indicator="cvProgress">
+                        <h5 layout="row" layout-align="center">Currículum</h5>
+                    </div>
+                </md-grid-tile>
+                <md-grid-tile ng-if="application.profType == 4 || application.profType == 5 || application.profType == 6 || application.profType == 9" md-colspan="1" md-rowspan="1">
+                    <div layout="column" class="dropfile" dropfile prop="const" indicator="constProgress">
+                        <h5 layout="row" layout-align="center">Constancia de Estudios</h5>
+                    </div>
+                </md-grid-tile>
+                <md-grid-tile ng-if="application.profType == 8" md-colspan="1" md-rowspan="1">
+                    <div layout="column" class="dropfile" dropfile prop="constLab" indicator="constLabProgress">
+                        <h5 layout="row" layout-align="center">Constancia Laboral</h5>
+                    </div>
+                </md-grid-tile>
+                <md-grid-tile ng-if="application.profType == 9" md-colspan="1" md-rowspan="1">
+                    <div layout="column" class="dropfile" dropfile prop="certComp" indicator="certCompProgress">
+                        <h5 layout="row" layout-align="center">Certificado de Competencia Laboral</h5>
+                    </div>
+                </md-grid-tile>
+                <md-grid-tile ng-if="application.profType == 9" md-colspan="1" md-rowspan="1">
+                    <div layout="column" class="dropfile" dropfile prop="port" indicator="portProgress">
+                        <h5 layout="row" layout-align="center">Portafolio</h5>
+                    </div>
+                </md-grid-tile>
 
 
-            <!--</md-grid-list>-->
+            </md-grid-list>
         </div>
     </md-card>
 
     <div layout="row" layout-align="center" style="margin-bottom: 3em">
-        <md-button ng-click="submit()" ng-disabled="applicationIncomplete()" class="md-raised md-primary">Subir
-            solicitud
-        </md-button>
+        <div layout="column" flex="15">
+            <md-button ng-click="save()" class="md-raised md-primary">
+                Guardar
+            </md-button>
+        </div>
+        <div layout="column"flex="15" flex-offset="5">
+            <md-button ng-click="submit()" ng-disabled="applicationIncomplete()" class="md-raised md-primary">
+                Enviar Solicitud
+            </md-button>
+        </div>
     </div>
 </div>
 
