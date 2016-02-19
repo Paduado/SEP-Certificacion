@@ -127,14 +127,20 @@ angular.module('myApp.new', ['ngRoute']).config([
             } else
             {
                 console.log("Get succeeded.");
-                $scope.application.userData = data.Items[0];
+                $scope.application.userData = JSON.parse(localStorage.getItem("currentUserData"));
+                $scope.application.userData.email = localStorage.getItem("userEmail");
+                $scope.application.userInfor = JSON.parse(localStorage.getItem("currentUserData"));
+                $scope.application.userInfor.email = localStorage.getItem("userEmail");
                 $scope.application.uploadTimestamp = Math.floor(Date.now());
                 $scope.application.userID = localStorage.getItem("identityID");
+                $scope.application.email = localStorage.getItem("userEmail");
+                $scope.application.userEmail = localStorage.getItem("userEmail");
                 $scope.application.applicationID = Math.floor(Date.now()).toString();
                 $scope.application.applicationStatus = status;
 
                 var params = {
-                    TableName: 'applications', Item: $scope.application
+                    TableName: 'applications',
+                    Item: $scope.application
                 };
 
                 docClient.put(params, function (err, data)
