@@ -13,7 +13,7 @@
             templateUrl: 'sidebar/sidebar-menu.html',
             controller: ['$scope', '$location', '$rootScope', function ($scope, $location, $rootScope)
             {
-                $rootScope.tab = 3;
+                $rootScope.tab = 1;
                 $scope.userTypePrivileges = [
                     [],
                     [1,2,3],

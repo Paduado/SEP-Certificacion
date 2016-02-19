@@ -22,7 +22,7 @@ angular.module('myApp', [
     ])
     .config(['$routeProvider', function ($routeProvider)
     {
-        $routeProvider.otherwise({redirectTo: '/applications/search'});
+        $routeProvider.otherwise({redirectTo: '/new'});
     }])
     .config(function ($mdThemingProvider)
     {
