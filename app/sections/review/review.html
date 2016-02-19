@@ -232,7 +232,7 @@
 
                         <label for="profile">Perfin educativo:</label>
                         <md-select name="profile" id="profile" ng-model="application.profile" disabled>
-                            <md-option ng-repeat="profile in profiles |orderBy:'profile'" ng-value="profile.profile" ng-click="application.profType = profile.profType" ng-show="application.level == profile.levelType">
+                            <md-option ng-repeat="profile in profiles |orderBy:'profile':true" ng-value="profile.profile" ng-click="application.profType = profile.profType" ng-show="application.level == profile.levelType">
                                 {{profile.profile}}
                             </md-option>
                         </md-select>
@@ -273,21 +273,36 @@
         <div class="card-header">Documentos</div>
         <div class="card-body" style="padding:4em">
             <div layout="row" layout-align="center">
-                <div layout="column" flex="50"class="dropfile" dropfilee prop="dictamen" indicator="actaProgress" file-name="Acta de Nacimiento">
+                <div layout="column" flex="50"  dropfilee prop="dictamen" indicator="actaProgress" file-name="Dictamen">
                     <h5 layout="row" layout-align="center">Dictamen</h5>
                 </div>
+            </div>
+        </div>
+    </md-card>
+    <md-card ng-if="$root.userType == 1 && application.dictamen != undefined">
+        <div class="card-header">Dictamen</div>
+        <div class="card-body" style="padding:4em">
+            <div layout="row" layout-align="center">
+                <div layout="column"  flex="50">
+                    <h5 layout="row" layout-align="center">Dictamen</h5>
+                    <md-icon ng-click="openFile(application.dictamen.path)" style="margin-top:0;width:150px;" md-svg-src="resources/icons/ic_insert_drive_file.svg">
+                        <md-tooltip md-direction="left">
+                            Descargar
+                        </md-tooltip>
+                    </md-icon>
                 </div>
+            </div>
         </div>
     </md-card>
 
     <div ng-if="$root.userType > 1" layout="row" layout-align="center" style="margin-bottom: 3em">
         <div layout="column" flex="15">
-            <md-button class="md-raised md-primary">
+            <md-button ng-click="reject()" class="md-raised md-primary">
                 Rechazar
             </md-button>
         </div>
         <div layout="column" flex="15">
-            <md-button class="md-raised md-primary">
+            <md-button ng-click="accept()" class="md-raised md-primary">
                 Aceptar
             </md-button>
         </div>
