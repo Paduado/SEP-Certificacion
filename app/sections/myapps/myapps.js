@@ -105,7 +105,7 @@ angular.module('myApp.myapps', ['ngRoute', 'smart-table'])
         $scope.openDetails = function (appId)
         {
             $rootScope.application = appId;
-            $scope.go('/applications/review/'+appId);
+            $scope.go('/review/'+appId);
         };
 
 

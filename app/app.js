@@ -13,6 +13,7 @@ angular.module('myApp', [
         'myApp.profile',
         'myApp.myapps',
         'myApp.new',
+        'myApp.review',
         'ngMaterial',
         'ngMessages',
         'ngDroplet',

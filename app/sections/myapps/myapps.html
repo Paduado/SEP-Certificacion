@@ -10,7 +10,7 @@
             </tr>
             </thead>
             <tbody md-body>
-            <tr md-row ng-repeat="app in applications">
+            <tr md-row ng-repeat="app in applications |orderBy:'uploadTimestamp'">
                 <td md-cell>{{getType(app.level)}}</td>
                 <td md-cell>{{getStatus(app.applicationStatus)}}</td>
                 <td md-cell>{{formatDate(app.uploadTimestamp)}}</td>

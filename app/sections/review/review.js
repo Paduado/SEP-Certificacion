@@ -1,16 +1,43 @@
 'use strict';
 
-angular.module('myApp.new', ['ngRoute']).config([
+angular.module('myApp.review', ['ngRoute']).config([
     '$routeProvider', function ($routeProvider)
     {
-        $routeProvider.when('/new', {
-            templateUrl: 'sections/new/new.html', controller: 'NewCtrl'
+        $routeProvider.when('/review/:appId', {
+            templateUrl: 'sections/review/review.html', controller: 'ReviewCtrl'
         });
     }
-]).controller('NewCtrl', function ($scope, $mdDialog)
+]).controller('ReviewCtrl', function ($scope, $mdDialog,$route)
 {
-    $scope.application = {};
-    $scope.application.docs = {};
+
+    var docClient = new AWS.DynamoDB.DocumentClient();
+
+
+    var params = {
+        TableName: "applications",
+        Key:{
+            applicationID:$route.current.params.appId
+        }
+    };
+
+    docClient.get(params, function (err, data)
+    {
+        if (err)
+        {
+
+        } else
+        {
+            console.log(data);
+            $scope.application=data.Item;
+            $scope.$digest();
+        }
+    })
+
+    $scope.openFile = function(file)
+    {
+        window.open(file);
+    };
+
 
     $scope.states = [
         {key: "01", name: "Aguascalientes"}, {key: "02", name: "Baja California"}, {
@@ -89,93 +116,6 @@ angular.module('myApp.new', ['ngRoute']).config([
         {profType: 9, levelType: 5, profile: "Educación Primaria"}
     ];
 
-
-
-    $scope.save = function()
-    {
-        $scope.uploadApplication(1);
-    };
-    $scope.submit = function ()
-    {
-        $scope.uploadApplication(2);
-    };
-
-    $scope.uploadApplication = function(status)
-    {
-
-        var docClient = new AWS.DynamoDB.DocumentClient();
-
-
-        var params = {
-            TableName: "SEPUsers",
-            "IndexName": "identityID-index",
-            KeyConditionExpression: "#x = :y",
-            ExpressionAttributeNames:{
-                "#x": "identityID"
-            },
-            ExpressionAttributeValues: {
-                ":y":localStorage.getItem("identityID")
-            }
-        };
-
-
-        docClient.query(params, function (err, data)
-        {
-            if (err)
-            {
-                console.error("Unable to get the table. Error JSON:", JSON.stringify(err, null, 2));
-            } else
-            {
-                console.log("Get succeeded.");
-                $scope.application.userData = data.Items[0];
-                $scope.application.uploadTimestamp = Math.floor(Date.now());
-                $scope.application.userID = localStorage.getItem("identityID");
-                $scope.application.applicationID = Math.floor(Date.now()).toString();
-                $scope.application.applicationStatus = status;
-
-                var params = {
-                    TableName: 'applications', Item: $scope.application
-                };
-
-                docClient.put(params, function (err, data)
-                {
-                    if (err)
-                    {
-                        $mdDialog.show($mdDialog.alert().parent(angular.element(document.querySelector('body'))).clickOutsideToClose(true).title('Error al subir la solicitud').textContent('Alguno de los campos esta vacio o con un formato erroneo.').ariaLabel('Alert Dialog Demo').ok('Aceptar'));
-                        console.log(err);
-                    } else
-                    {
-                        $mdDialog.show($mdDialog.alert().parent(angular.element(document.querySelector('body'))).clickOutsideToClose(true).title('Solicitud dada de alta').textContent('Aparecerá en el area de pendientes para su revisión.').ariaLabel('Alert Dialog Demo').ok('Aceptar'));
-                        console.log(data);
-                    }
-                });
-                return data.Items[0];
-            }
-        });
-
-
-    };
-
-    $scope.getUserData = function()
-    {
-
-    };
-
-    $scope.applicationIncomplete = function()
-    {
-
-        var missingDocs = false;
-
-        angular.forEach($scope.application.docs,function(value)
-        {
-            if(value == undefined)
-                missingDocs = true;
-        });
-        return $scope.form.$invalid || missingDocs;
-
-    };
-
-
     $scope.onFileAdded = function (file, prop, indicator,name)
     {
         $scope[indicator] = 1;
@@ -200,7 +140,7 @@ angular.module('myApp.new', ['ngRoute']).config([
             else
             {
                 console.log(data.Location);
-                $scope.application.docs[prop] =
+                $scope[prop] =
                 {
                     path:data.Location,
                     name:name
@@ -230,16 +170,16 @@ angular.module('myApp.new', ['ngRoute']).config([
     };
     $scope.deleteFile = function (prop, indicator)
     {
-        $scope.application.docs[prop] = undefined;
+        $scope[prop] = undefined;
         $scope[indicator] = undefined;
         $scope.$digest()
     }
 
-}).directive('dropfile', function ($compile)
+}).directive('dropfilee', function ($compile)
 {
     return function ($scope, element, attrs)
     {
-        $scope.application.docs[attrs.prop] = undefined;
+        $scope[attrs.prop] = undefined;
 
         element.on('$destroy', function()
         {
@@ -247,17 +187,17 @@ angular.module('myApp.new', ['ngRoute']).config([
         });
 
         var html =
-            '<div layout="row" layout-align="center center" ng-show="application.docs.' + attrs.prop + ' == undefined " class="dropzone">'
-                + '<p>Arrastre archivo o haga click</p>'
+            '<div layout="row" layout-align="center center" ng-show="' + attrs.prop + ' == undefined " class="dropzone">'
+            + '<p>Arrastre archivo o haga click</p>'
             + '</div>'
-            + '<div layout="row" layout-align="center" class="file-icon-container " ng-show="application.docs.' + attrs.prop + ' != undefined">'
+            + '<div layout="row" layout-align="center" class="file-icon-container " ng-show="' + attrs.prop + ' != undefined">'
 
-                + '<md-icon class="file-icon" md-svg-src="resources/icons/ic_insert_drive_file.svg"></md-icon>'
-                + '<md-icon class="delete-icon" md-svg-src="resources/icons/ic_delete_forever.svg">'
-                    + '<md-tooltip md-direction="left">'
-                        + 'Eliminar'
-                    + '</md-tooltip>'
-                + '</md-icon>'
+            + '<md-icon class="file-icon" md-svg-src="resources/icons/ic_insert_drive_file.svg"></md-icon>'
+            + '<md-icon class="delete-icon" md-svg-src="resources/icons/ic_delete_forever.svg">'
+            + '<md-tooltip md-direction="left">'
+            + 'Eliminar'
+            + '</md-tooltip>'
+            + '</md-icon>'
             + '</div>'
             + '<md-progress-linear ng-show="' + attrs.indicator + ' != undefined" md-mode="determinate" ng-value="' + attrs.indicator + '"></md-progress-linear>'
             + '<div class="name"></div>';
@@ -378,10 +318,3 @@ angular.module('myApp.new', ['ngRoute']).config([
         }
     };
 });
-
-
-
-
-
-
-

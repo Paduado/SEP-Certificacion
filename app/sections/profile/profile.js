@@ -28,7 +28,7 @@ angular.module('myApp.profile', ['ngRoute'])
                 var scope = angular.element($('#birthdate')).scope();
                 scope.$apply(function ()
                 {
-                    scope.application.birthdate = date;
+                    scope.user.birthdate = date;
                 });
             }
         });
@@ -38,6 +38,7 @@ angular.module('myApp.profile', ['ngRoute'])
             {
                 if (err) console.log(err, err.stack);
                 else {
+
                     localStorage.setItem("userProfileIsComplete", true);
                     $mdDialog.show(
                         $mdDialog.alert()
@@ -160,8 +161,8 @@ angular.module('myApp.profile', ['ngRoute'])
                         }
                     }
                 }
-            }
-
+            };
+            localStorage.setItem('currentUserData',JSON.stringify($scope.user));
             dynamodb.updateItem(options, that.updateUserDataResponseHandler);
         };
     });
