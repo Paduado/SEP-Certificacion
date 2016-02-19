@@ -4,9 +4,12 @@ Este repositorio incluye la propuesta de Smartplace S.A.P.I. de C.V. para el con
 La aplicación web prototipo incluye 2 usuarios principales:
 Usuario registrado.
 Reconocedor de Saberes Adquiridos.
-Instancia Evaluadora.
 
 A) El usuario registrado puede crear una solicitud de contiene 2 funciones en este prototipo:
+
+Crear solicitud nueva.
+Ver solicitudes
+Editar datos de perfil
 
 1. Nuevo:
 En esta sección el gestor ingresa los datos del solicitante de acuerdo al procedimiento establecido por los organizadores del concurso.
@@ -15,6 +18,11 @@ En esta sección el gestor ingresa los datos del solicitante de acuerdo al proce
 En esta sección, el gestor puede buscar las solicitudes tramitadas y ver sus detalles.
 
 B) El panel del Reconocedor de Saberes Adquiridos puede emitir una resolución sobre las solicitudes enviadas por el usuario.
+- Ver solicitudes.
+- Rechazar.
+- Aprobar.
+- 
+
 
 Otras funciones:
 El sistema genera correos electrónicos automáticos para notificar al usuario cuando su solicitud ha sufrido un cambio de estatus.
