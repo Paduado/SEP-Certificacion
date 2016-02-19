@@ -3,8 +3,8 @@ Este repositorio incluye la propuesta de Smartplace S.A.P.I. de C.V. para el con
 
 La aplicación web prototipo incluye 2 usuarios principales:
 
-Usuario.
-Reconocedor de Saberes Adquiridos.
+- Usuario.
+- Reconocedor de Saberes Adquiridos.
 
 A) El usuario puede realizar las siguientes funciones:
 
