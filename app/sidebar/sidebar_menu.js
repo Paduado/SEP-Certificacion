@@ -11,9 +11,9 @@
         return {
             restrict: 'E',
             templateUrl: 'sidebar/sidebar-menu.html',
-            controller: ['$scope', '$location', function ($scope, $location)
+            controller: ['$scope', '$location', '$rootScope', function ($scope, $location, $rootScope)
             {
-                $scope.tab = "";
+                $rootScope.tab = 3;
 
                 $scope.isTabSelected = function (tab)
                 {

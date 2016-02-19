@@ -119,26 +119,21 @@ angular.module('myApp', [
             }
             else
             {
-                if(localStorage.getItem("userProfileIsComplete") === null)
+                if("false" == localStorage.getItem("userProfileIsComplete"))
                 {
+                    $rootScope.tab = 3;
                     if(next.templateUrl != "sections/profile/profile.html")
                     {
                         $location.path("/profile");
                     }
-                    else
-                    {
-                        $mdDialog.show(
-                            $mdDialog.alert()
-                            .parent(angular.element(document.querySelector('body')))
-                            .title('Por favor, actualiza tus datos!')
-                            .textContent("")
-                            .ariaLabel('Update User Data')
-                            .ok('OK')
-                        )
-                        .then(function()
-                        {
-                        });
-                    }
+                    $mdDialog.show(
+                        $mdDialog.alert()
+                        .parent(angular.element(document.querySelector('body')))
+                        .title('Por favor, actualiza tus datos!')
+                        .textContent("")
+                        .ariaLabel('Update User Data')
+                        .ok('OK')
+                    );
                 }
                 else
                 {
