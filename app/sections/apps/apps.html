@@ -1,0 +1,28 @@
+<md-card>
+    <md-table-container>
+        <table md-table ng-model="selected" md-progress="promise">
+            <thead md-head>
+            <tr md-row>
+                <th md-column>Nivel</th>
+                <th md-column>Status</th>
+                <th md-column>Fecha</th>
+                <th md-column>Detalles</th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row ng-repeat="app in applications">
+                <td md-cell>{{getType(app.level)}}</td>
+                <td md-cell>{{getStatus(app.applicationStatus)}}</td>
+                <td md-cell>{{formatDate(app.uploadTimestamp)}}</td>
+                <td md-cell>
+                    <md-icon ng-click="openDetails(app.applicationID)" md-svg-icon="resources/icons/ic_open_in_new.svg" aria-hidden="true">
+                    </md-icon>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
+
+</md-card>
+
