@@ -14,6 +14,12 @@
             controller: ['$scope', '$location', '$rootScope', function ($scope, $location, $rootScope)
             {
                 $rootScope.tab = 3;
+                $scope.userTypePrivileges = [
+                    [],
+                    [1,2,3],
+                    [1,4,3],
+                    [1,4,3]
+                ];
 
                 $scope.isTabSelected = function (tab)
                 {
@@ -36,6 +42,11 @@
                 {
                     $(this).parent().children('ul.tree').toggle('blind');
                 });
+
+                $scope.currentUserHasTabPrivileges = function(tab)
+                {
+                    return (-1<$.inArray(tab,$scope.userTypePrivileges[parseInt(localStorage.getItem("userType"))]))?true:false;
+                }
             }],
             controllerAs: 'sidebarCtrl'
         };

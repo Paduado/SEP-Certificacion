@@ -12,6 +12,7 @@ angular.module('myApp', [
         'myApp.verify',
         'myApp.profile',
         'myApp.myapps',
+        'myApp.apps',
         'myApp.new',
         'myApp.review',
         'ngMaterial',
