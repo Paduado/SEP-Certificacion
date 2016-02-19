@@ -2,6 +2,7 @@
 Este repositorio incluye la propuesta de Smartplace S.A.P.I. de C.V. para el concurso de Retos Públicos: Reto Certificación en Línea (Entregables Fase 2) con una licencia Apache 2.0.
 
 La aplicación web prototipo incluye 2 usuarios principales:
+
 Usuario.
 Reconocedor de Saberes Adquiridos.
 
