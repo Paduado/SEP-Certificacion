@@ -109,4 +109,7 @@ angular.module('myApp.myapps', ['ngRoute', 'smart-table'])
         };
 
 
+        $scope.onReorder = function (order) {
+            console.log(order)
+          };
     }]);

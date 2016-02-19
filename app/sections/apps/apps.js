@@ -107,5 +107,9 @@ angular.module('myApp.apps', ['ngRoute', 'smart-table'])
             $scope.go('/review/'+appId);
         };
 
+        $scope.onReorder = function (order) {
+            console.log(order)
+        };
+
 
     }]);

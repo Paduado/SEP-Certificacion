@@ -140,7 +140,7 @@ angular.module('myApp.review', ['ngRoute']).config([
             else
             {
                 console.log(data.Location);
-                $scope[prop] =
+                $scope.dictamen =
                 {
                     path:data.Location,
                     name:name
@@ -170,27 +170,104 @@ angular.module('myApp.review', ['ngRoute']).config([
     };
     $scope.deleteFile = function (prop, indicator)
     {
-        $scope[prop] = undefined;
+        $scope.dictamen = undefined;
         $scope[indicator] = undefined;
         $scope.$digest()
+    };
+
+    $scope.accept =  function()
+    {
+        var docClient = new AWS.DynamoDB.DocumentClient();
+        var table = "applications";
+
+        var date = new Date().getTime();
+
+        // Update the item, unconditionally,
+
+        var params = {
+            TableName:table,
+            Key:{
+                "applicationID": $scope.application.applicationID
+            },
+            UpdateExpression: "set applicationStatus = :s, uploadTimestamp = :u",
+            ExpressionAttributeValues:{
+                ":s": 3,
+                ":u": date
+            },
+            ReturnValues:"UPDATED_NEW"
+        };
+
+        console.log("Updating the item...");
+        docClient.update(params, function(err, data) {
+            if (err) {
+                console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+            } else {
+                $mdDialog.show(
+                    $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('body')))
+                    .clickOutsideToClose(true)
+                    .title('Solicitud Aceptada')
+                    .ariaLabel('Alert Dialog Demo')
+                    .ok('Aceptar')
+                );
+                $scope.go('applications/search');
+                console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+                go("/apps/search");
+            }
+        });
+
+
+
+    };
+
+    $scope.reject = function ()
+    {
+        var docClient = new AWS.DynamoDB.DocumentClient();
+        var table = "applications";
+
+        var date = new Date().getTime();
+
+        // Update the item, unconditionally,
+
+        var params = {
+            TableName: table, Key: {
+                "applicationID": $scope.application.applicationID
+            }, UpdateExpression: "set applicationStatus = :s, uploadTimestamp = :u", ExpressionAttributeValues: {
+                ":s": 4, ":u": date
+            }, ReturnValues: "UPDATED_NEW"
+        };
+
+        console.log("Updating the item...");
+        docClient.update(params, function (err, data)
+        {
+            if (err)
+            {
+                console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+            } else
+            {
+                $mdDialog.show($mdDialog.alert().parent(angular.element(document.querySelector('body'))).clickOutsideToClose(true).title('Solicitud Cancelada').ariaLabel('Alert Dialog Demo').ok('Aceptar'));
+                $scope.go('applications/search');
+                console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+                go("/apps/search");
+            }
+        });
     }
 
 }).directive('dropfilee', function ($compile)
 {
     return function ($scope, element, attrs)
     {
-        $scope[attrs.prop] = undefined;
 
         element.on('$destroy', function()
         {
-            delete $scope.application.docs[attrs.prop];
+            delete $scope.dictamen;
         });
 
         var html =
-            '<div layout="row" layout-align="center center" ng-show="' + attrs.prop + ' == undefined " class="dropzone">'
+            '<div layout="row" layout-align="center center" ng-show="dictamen  == undefined " class="dropzone">'
             + '<p>Arrastre archivo o haga click</p>'
             + '</div>'
-            + '<div layout="row" layout-align="center" class="file-icon-container " ng-show="' + attrs.prop + ' != undefined">'
+            + '<div layout="row" layout-align="center" class="file-icon-container" ng-show="dictamen">'
 
             + '<md-icon class="file-icon" md-svg-src="resources/icons/ic_insert_drive_file.svg"></md-icon>'
             + '<md-icon class="delete-icon" md-svg-src="resources/icons/ic_delete_forever.svg">'
