@@ -59,7 +59,7 @@ angular.module('myApp.myapps', ['ngRoute', 'smart-table'])
 
             month = (month < 10 ? "0" : "") + month;
             day = (day < 10 ? "0" : "") + day;
-            return  date.getFullYear() + "-" + month + "-" + day;
+            return  date.getFullYear() + "/" + month + "/" + day+", "+date.getHours()+":"+date.getMinutes()+"hrs";
 
         };
 
