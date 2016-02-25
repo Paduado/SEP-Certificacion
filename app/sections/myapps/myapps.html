@@ -28,6 +28,6 @@
             </tbody>
         </table>
     </md-table-container>
-    <md-table-pagination ng-init="limit = 5;page = 1"md-limit="limit" md-page="page" md-total="{{applications.length}}"  md-page-select></md-table-pagination>
+    <md-table-pagination md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}" ng-init="limit = 5;page = 1"md-limit="limit" md-page="page" md-total="{{applications.length}}"  md-page-select ></md-table-pagination>
 </md-card>
 

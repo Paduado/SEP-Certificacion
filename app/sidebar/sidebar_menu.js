@@ -17,8 +17,8 @@
                 $scope.userTypePrivileges = [
                     [],
                     [1,2,3],
-                    [1,4,3],
-                    [1,4,3]
+                    [5,4],
+                    [5,4]
                 ];
 
                 $scope.isTabSelected = function (tab)

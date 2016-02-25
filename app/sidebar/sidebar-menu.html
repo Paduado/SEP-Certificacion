@@ -7,6 +7,10 @@
                     <img src="./resources/icons/ic_menu_search.png">
                     <p>Nueva Solicitud</p>
                 </li>
+                <li ng-if="currentUserHasTabPrivileges(5)" ng-click="setTab(5); go('/newfull')" ng-class="isTabSelected(5)?'sidebar-item-selected':'sidebar-item'">
+                    <img src="./resources/icons/ic_menu_search.png">
+                    <p>Nueva Solicitud</p>
+                </li>
                 <li ng-if="currentUserHasTabPrivileges(2)" ng-click="setTab(2); go('/myapps')"
                     ng-class="isTabSelected(2)?'sidebar-item-selected':'sidebar-item'">
                     <img src="./resources/icons/ic_menu_search.png">

@@ -12,6 +12,11 @@ angular.module('myApp.new', ['ngRoute']).config([
     $scope.application = {};
     $scope.application.docs = {};
 
+    $scope.application.docs.acta = {
+        path:"https://sepcertificacion.s3.amazonaws.com/smartplace.png",
+        name:"paduapadua"
+    };
+
     $scope.states = [
         {key: "01", name: "Aguascalientes"}, {key: "02", name: "Baja California"}, {
             key: "03", name: "Baja California Sur"
@@ -127,14 +132,9 @@ angular.module('myApp.new', ['ngRoute']).config([
             } else
             {
                 console.log("Get succeeded.");
-                $scope.application.userData = JSON.parse(localStorage.getItem("currentUserData"));
-                $scope.application.userData.email = localStorage.getItem("userEmail");
-                $scope.application.userInfor = JSON.parse(localStorage.getItem("currentUserData"));
-                $scope.application.userInfor.email = localStorage.getItem("userEmail");
+                $scope.application.userData = data.Items[0];
                 $scope.application.uploadTimestamp = Math.floor(Date.now());
                 $scope.application.userID = localStorage.getItem("identityID");
-                $scope.application.email = localStorage.getItem("userEmail");
-                $scope.application.userEmail = localStorage.getItem("userEmail");
                 $scope.application.applicationID = Math.floor(Date.now()).toString();
                 $scope.application.applicationStatus = status;
 
@@ -162,10 +162,6 @@ angular.module('myApp.new', ['ngRoute']).config([
 
     };
 
-    $scope.getUserData = function()
-    {
-
-    };
 
     $scope.applicationIncomplete = function()
     {
@@ -174,215 +170,22 @@ angular.module('myApp.new', ['ngRoute']).config([
 
         angular.forEach($scope.application.docs,function(value)
         {
-            if(value == undefined)
+            if(value == "")
                 missingDocs = true;
         });
         return $scope.form.$invalid || missingDocs;
 
     };
 
-
-    $scope.onFileAdded = function (file, prop, indicator,name)
+    $scope.test = function()
     {
-        $scope[indicator] = 1;
-        $scope.$digest();
-        $scope.upload(file, function (err, data)
-        {
-            if (err)
-            {
-                console.log(err);
-                $scope[indicator] = undefined;
-                $scope.$digest();
-                $mdDialog.show(
-                    $mdDialog.alert()
-                    .parent(angular.element(document.querySelector('body')))
-                    .clickOutsideToClose(true)
-                    .title('No se pudo subir el archivo')
-                    .textContent('Verifique su conexión.')
-                    .ariaLabel('Alert Dialog Demo')
-                    .ok('Aceptar')
-                );
-            }
-            else
-            {
-                console.log(data.Location);
-                $scope.application.docs[prop] =
-                {
-                    path:data.Location,
-                    name:name
-                };
-                $scope.$digest();
-
-            }
-        }, function (progress)
-        {
-            $scope[indicator] = progress;
-            $scope.$digest();
-        });
+        console.log($scope.application.docs);
     };
-
-    $scope.upload = function (file, onUpload, onUploading)
+    $scope.deleteDoc = function(doc)
     {
-        var params = {Bucket: 'sepcertificacion', Key: file.name, Body: file, ACL: 'public-read'};
-
-        var s3 = new AWS.S3();
-
-        s3.upload(params, onUpload).on('httpUploadProgress', function (event)
-        {
-
-            onUploading(Math.floor(event.loaded / event.total * 100));
-        });
-
-    };
-    $scope.deleteFile = function (prop, indicator)
-    {
-        $scope.application.docs[prop] = undefined;
-        $scope[indicator] = undefined;
-        $scope.$digest()
+        delete $scope.application.docs[doc];
     }
 
-}).directive('dropfile', function ($compile)
-{
-    return function ($scope, element, attrs)
-    {
-        $scope.application.docs[attrs.prop] = undefined;
-
-        element.on('$destroy', function()
-        {
-            delete $scope.application.docs[attrs.prop];
-        });
-
-        var html =
-            '<div layout="row" layout-align="center center" ng-show="application.docs.' + attrs.prop + ' == undefined " class="dropzone">'
-                + '<p>Arrastre archivo o haga click</p>'
-            + '</div>'
-            + '<div layout="row" layout-align="center" class="file-icon-container " ng-show="application.docs.' + attrs.prop + ' != undefined">'
-
-                + '<md-icon class="file-icon" md-svg-src="resources/icons/ic_insert_drive_file.svg"></md-icon>'
-                + '<md-icon class="delete-icon" md-svg-src="resources/icons/ic_delete_forever.svg">'
-                    + '<md-tooltip md-direction="left">'
-                        + 'Eliminar'
-                    + '</md-tooltip>'
-                + '</md-icon>'
-            + '</div>'
-            + '<md-progress-linear ng-show="' + attrs.indicator + ' != undefined" md-mode="determinate" ng-value="' + attrs.indicator + '"></md-progress-linear>'
-            + '<div class="name"></div>';
-        var template = angular.element(html);
-
-        var linkFn = $compile(template);
-
-        var e = linkFn($scope);
-
-        angular.element(element[0]).append(e);
-
-
-        var drop = element[0].getElementsByClassName('dropzone')[0];
-        var iconContainer = element[0].getElementsByClassName('file-icon-container')[0];
-        var fileIcon = iconContainer.getElementsByClassName('file-icon')[0];
-        var deleteIcon = iconContainer.getElementsByClassName('delete-icon')[0];
-        var name = element[0].getElementsByClassName('name')[0];
-        var inputFile = document.getElementById('input-file');
-
-        addEventHandler(drop, 'dragover', cancel);
-        addEventHandler(drop, 'dragenter', cancel);
-        addEventHandler(drop, 'drop', cancel);
-        addEventHandler(drop, 'click', cancel);
-        addEventHandler(iconContainer, 'click', cancel);
-        addEventHandler(iconContainer, 'mouseover', cancel);
-        addEventHandler(iconContainer, 'mouseleave', cancel);
-
-        addEventHandler(drop, 'drop', function (e)
-        {
-            e = e || window.event;
-            if (e.preventDefault)
-            {
-                e.preventDefault();
-            }
-            name.innerHTML = e.dataTransfer.files[0].name;
-            $scope.onFileAdded(e.dataTransfer.files[0], attrs.prop, attrs.indicator,attrs.fileName);
-
-            return false;
-        });
-
-        addEventHandler(drop, 'click', function (e)
-        {
-            addEventHandler(inputFile, 'change', fileChanged);
-            inputFile.click();
-            return false;
-        });
-
-        addEventHandler(iconContainer, 'click', function (e)
-        {
-            name.innerHTML = "";
-            $scope.deleteFile(attrs.prop, attrs.indicator);
-            return false;
-        });
-        addEventHandler(iconContainer, 'mouseover', function (e)
-        {
-            fileIcon.style.opacity = 0;
-            deleteIcon.style.opacity = 1;
-            return false;
-        });
-        addEventHandler(iconContainer, 'mouseleave', function (e)
-        {
-            fileIcon.style.opacity = 1;
-            deleteIcon.style.opacity = 0;
-
-            return false;
-        });
-
-
-        function fileChanged(e)
-        {
-            name.innerHTML = e.srcElement.files[0].name;
-            $scope.onFileAdded(e.srcElement.files[0], attrs.prop, attrs.indicator,attrs.fileName);
-            this.value = null;
-            removeEventHandler(inputFile, 'change', fileChanged);
-            return false;
-        }
-
-
-        function addEventHandler(obj, evt, handler)
-        {
-            if (obj.addEventListener)
-            {
-                obj.addEventListener(evt, handler, false);
-            }
-            else if (obj.attachEvent)
-            {
-                obj.attachEvent('on' + evt, handler);
-            }
-            else
-            {
-                obj['on' + evt] = handler;
-            }
-        }
-
-        function removeEventHandler(obj, evt, handler)
-        {
-            if (obj.removeEventListener)
-            {
-                obj.removeEventListener(evt, handler, false);
-            }
-            else if (obj.detachEvent)
-            {
-                obj.detachEvent('on' + evt, handler);
-            }
-            else
-            {
-                obj['on' + evt] = handler;
-            }
-        }
-
-        function cancel(e)
-        {
-            if (e.preventDefault)
-            {
-                e.preventDefault();
-            }
-            return false;
-        }
-    };
 });
 
 

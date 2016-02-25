@@ -1,0 +1,319 @@
+<div>
+    <form name="form" >
+
+        <md-card>
+            <div class="card-header">Personales</div>
+            <div class="card-body">
+                <div layout="row" layout-align="center">
+                    <div layout="column" flex="40">
+                        <md-input-container>
+                            <label for="lastname1">Apellido paterno:</label>
+                            <input type="text" id="lastname1" name="lastname1" ng-model="application.userData.lastname1"
+                                   required>
+                            <ng-messages for="form.lastname1.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                        </md-input-container>
+
+                        <md-input-container>
+                            <label for="lastname2">Apellido materno:</label>
+                            <input type="text" id="lastname2" name="lastname2" ng-model="application.userData.lastname2"
+                                   required>
+                            <ng-messages for="form.lastname2.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                        </md-input-container>
+
+                        <md-input-container>
+                            <label for="firstname">Nombre:</label>
+                            <input type="text" id="firstname" name="firstname" ng-model="application.userData.firstname"
+                                   required>
+                            <ng-messages for="form.firstname.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                        </md-input-container>
+
+                    </div>
+                    <div layout="column" flex="40" flex-offset="10">
+
+                        <md-input-container>
+                            <label for="sex">Género:</label>
+                            <md-select name="sex" id="sex" ng-model="application.userData.sex" required
+                                       ng-style="sex==''?{'color':'#aaa'}:{'color':'#000'}">
+                                <md-option value="m">Masculino</md-option>
+                                <md-option value="f">Femenino</md-option>
+                            </md-select>
+
+                            <ng-messages for="form.sex.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                            <div class="md-errors-spacer"></div>
+                        </md-input-container>
+
+                        <md-input-container>
+                            <label for="birthdate">Fecha de nacimiento:</label>
+                            <input type="text" id="birthdate" name="birthdate" ng-model="application.userData.birthdate" required
+                                   readonly>
+                            <ng-messages for="form.birthdate.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                        </md-input-container>
+
+                        <md-input-container>
+                            <label for="curp">CURP:</label>
+                            <input type="text" id="curp" name="curp" ng-model="application.userData.curp" required>
+                            <ng-messages for="form.curp.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                        </md-input-container>
+
+                    </div>
+                </div>
+            </div>
+        </md-card>
+
+        <md-card>
+            <div class="card-header">Contacto</div>
+            <div class="card-body">
+                <div layout="row" layout-align="center">
+                    <div layout="column" flex="40">
+                        <md-input-container>
+                            <label for="email">Correo electrónico:</label>
+                            <input type="email" id="email" name="email" ng-model="application.userData.email" multiple required>
+                            <ng-messages for="form.email.$error" role="alert">
+                                <ng-message when="email,required">Email inválido</ng-message>
+                            </ng-messages>
+                        </md-input-container>
+                        <md-input-container>
+                            <label for="email">Confirmar correo electrónico:</label>
+                            <input type="email" id="email2" name="email2" ng-model="application.userData.email2" multiple required
+                                   ui-validate="'$value==email'"
+                                   ui-validate-watch="'email'">
+                            <ng-messages for="form.email2.$error" role="alert">
+                                <ng-message when="email,required">Email inválido</ng-message>
+                            </ng-messages>
+                        </md-input-container>
+                    </div>
+                    <div layout="column" flex="40" flex-offset="10">
+                        <md-input-container>
+                            <label for="cell">Celular:</label>
+                            <input type="text" id="cell" name="cell" ng-model="application.userData.cell" required>
+                            <ng-messages for="form.cell.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                        </md-input-container>
+                        <md-input-container>
+                            <label for="phone">Teléfono fijo:</label>
+                            <input type="text" id="phone" name="phone" ng-model="application.userData.phone" required>
+                            <ng-messages for="form.phone.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </md-card>
+
+        <md-card>
+            <div class="card-header">Ubicación</div>
+            <div class="card-body">
+                <div layout="row" layout-align="center">
+                    <div layout="column" flex="40">
+                        <md-input-container>
+                            <label for="country">Pais:</label>
+                            <input type="text" id="country" name="country" ng-model="application.userData.country" required>
+                            <ng-messages for="form.country.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                        </md-input-container>
+
+                        <md-input-container><label for="state">Estado:</label>
+                            <input type="text" id="state" name="state" ng-model="application.userData.state" required>
+                            <ng-messages for="form.state.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                        </md-input-container>
+
+                        <md-input-container>
+                            <label for="city">Municipio:</label>
+                            <input type="text" id="city" name="city" ng-model="application.userData.city" required>
+                            <ng-messages for="form.city.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                        </md-input-container>
+
+                        <md-input-container>
+                            <label for="colony">Colonia:</label>
+                            <input type="text" id="colony" name="colony" ng-model="application.userData.colony" required>
+                            <ng-messages for="form.colony.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                        </md-input-container>
+                    </div>
+                    <div layout="column" flex="40" flex-offset="10">
+
+                        <md-input-container>
+                            <label for="street">Calle:</label>
+                            <input type="text" id="street" name="street" ng-model="application.userData.street" required>
+                            <ng-messages for="form.street.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                        </md-input-container>
+
+                        <md-input-container>
+                            <label for="cp">C.P:</label>
+                            <input type="text" id="cp" name="cp" ng-model="application.userData.cp" required>
+                            <ng-messages for="form.cp.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                        </md-input-container>
+
+                        <md-input-container>
+                            <label for="number">Número:</label>
+                            <input type="text" id="number" name="number" ng-model="application.userData.number" required>
+                            <ng-messages for="form.number.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                        </md-input-container>
+
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </md-card>
+
+        <md-card>
+            <div class="card-header">Tipo de trámite</div>
+            <div class="card-body">
+                <div layout="row" layout-align="center">
+
+                    <md-radio-group ng-model="application.type" ng-change="application.level = undefined; application.profile = undefined">
+                        <md-radio-button style="display: inline-block" value="1" class="md-primary">
+                            General
+                        </md-radio-button>
+                        <md-radio-button style="display: inline-block;margin-left: 1em" class="md-primary" value="2">
+                            Específico
+                        </md-radio-button>
+                    </md-radio-group>
+                </div>
+
+
+                <div layout="row" layout-align="center" style="margin-top:1em">
+
+                    <div flex="25" layout="column">
+                        <md-input-container>
+                            <label for="state">Entidad federativa:</label>
+                            <md-select name="state" id="state" ng-model="application.state" ng-change="genderChanged()" required>
+                                <md-option ng-repeat="state in states |orderBy:'name'" value="{{state.key}}">
+                                    {{state.name}}
+                                </md-option>
+                            </md-select>
+                            <ng-messages for="form.state.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                            <div class="md-errors-spacer"></div>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="column" flex="25" flex-offset="5">
+                        <md-input-container>
+                            <label for="level">Nivel educativo:</label>
+                            <md-select name="level" id="level" ng-model="application.level" ng-change="application.profile = undefined" required>
+                                <md-option ng-value="1" ng-show="application.type == 1">Educación Básica
+                                </md-option>
+                                <md-option ng-value="2" ng-show="application.type == 1">Educación Media Superior
+                                </md-option>
+                                <md-option ng-value="3" ng-show="application.type == 1">Técnico Superior Universitario
+                                </md-option>
+                                <md-option ng-value="4" ng-show="application.type == 1">Educación Superior
+                                </md-option>
+                                <md-option ng-value="5" ng-show="application.type == 2">Superior
+                                </md-option>
+
+                            </md-select>
+                            <ng-messages for="form.level.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+                            <div class="md-errors-spacer"></div>
+                        </md-input-container>
+                    </div>
+                    <div layout="column" flex="25" flex-offset="5">
+                        <md-input-container>
+
+                            <label for="profile">Perfin educativo:</label>
+                            <md-select name="profile" id="profile" ng-model="application.profile" required>
+                                <md-option ng-repeat="profile in profiles |orderBy:'profile'" ng-value="profile.profile" ng-click="application.profType = profile.profType" ng-show="application.level == profile.levelType">
+                                    {{profile.profile}}
+                                </md-option>
+                            </md-select>
+
+                            <ng-messages for="form.profile.$error">
+                                <ng-message when="required">Campo requerido</ng-message>
+                            </ng-messages>
+
+                            <div class="md-errors-spacer"></div>
+
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </md-card>
+
+
+    </form>
+
+
+    <md-card>
+        <div class="card-header">Documentos</div>
+        <div class="card-body" style="padding:4em">
+            <md-grid-list  ng-show="application.level != undefined && application.profile != undefined" md-cols="3" md-row-height="6:5" md-gutter="4em">
+                <md-grid-tile md-colspan="1" md-rowspan="1">
+                    <dropfile layout="column" class="dropfile"  ng-model="application.docs.acta"  file-name="Acta de Nacimiento" on-destroy="deleteDoc('acta')" deletable="true"></dropfile>
+                </md-grid-tile>
+                <md-grid-tile md-colspan="1" md-rowspan="1">
+                    <dropfile layout="column" class="dropfile"  ng-model="application.docs.curp"  file-name="CURP" on-destroy="deleteDoc('curp')" deletable="true"></dropfile>
+                </md-grid-tile>
+                <md-grid-tile ng-if="application.level != 2" md-colspan="1" md-rowspan="1">
+                    <dropfile layout="column" class="dropfile"  ng-model="application.docs.ident"  file-name="Identificación Oficial" on-destroy="deleteDoc('ident')" deletable="true"></dropfile>
+                </md-grid-tile>
+                <md-grid-tile md-colspan="1" md-rowspan="1">
+                    <dropfile layout="column" class="dropfile"  ng-model="application.docs.certAnt"  file-name="Certificado de Estudios" on-destroy="deleteDoc('certAnt')" deletable="true"></dropfile>
+                </md-grid-tile>
+                <md-grid-tile ng-if="application.level != 1 && application.level != 2" md-colspan="1" md-rowspan="1">
+                    <dropfile layout="column" class="dropfile"  ng-model="application.docs.constHon"  file-name="Constancia de Honorabilidad" on-destroy="deleteDoc('constHon')" deletable="true"></dropfile>
+                </md-grid-tile>
+                <md-grid-tile ng-if="application.level != 1 && application.level != 2" md-colspan="1" md-rowspan="1">
+                    <dropfile layout="column" class="dropfile"  ng-model="application.docs.cv"  file-name="Currículum" on-destroy="deleteDoc('cv')" deletable="true"></dropfile>
+                </md-grid-tile>
+                <md-grid-tile ng-if="application.profType == 4 || application.profType == 5 || application.profType == 6 || application.profType == 9" md-colspan="1" md-rowspan="1">
+                    <dropfile layout="column" class="dropfile"  ng-model="application.docs.const"  file-name="Constancia de Estudios" on-destroy="deleteDoc('const')" deletable="true"></dropfile>
+                </md-grid-tile>
+                <md-grid-tile ng-if="application.profType == 8" md-colspan="1" md-rowspan="1">
+                    <dropfile layout="column" class="dropfile"  ng-model="application.docs.constLab"  file-name="Constancia Laboral" on-destroy="deleteDoc('constLab')" deletable="true"></dropfile>
+                </md-grid-tile>
+                <md-grid-tile ng-if="application.profType == 9" md-colspan="1" md-rowspan="1">
+                    <dropfile layout="column" class="dropfile"  ng-model="application.docs.certComp"  file-name="Certificado de Competencia Laboral" on-destroy="deleteDoc('certComp')" deletable="true"></dropfile>
+                </md-grid-tile>
+                <md-grid-tile ng-if="application.profType == 9" md-colspan="1" md-rowspan="1">
+                    <dropfile layout="column" class="dropfile"  ng-model="application.docs.port"  file-name="Portafolio" on-destroy="deleteDoc('port')" deletable="true"></dropfile>
+                </md-grid-tile>
+        </div>
+    </md-card>
+
+    <div layout="row" layout-align="center" style="margin-bottom: 3em">
+        <!--<div layout="column" flex="15">-->
+            <!--<md-button ng-click="save()" class="md-raised md-primary">-->
+                <!--Guardar-->
+            <!--</md-button>-->
+        <!--</div>-->
+        <!--<div layout="column"flex="15">-->
+            <md-button ng-click="submit()" ng-disabled="applicationIncomplete()" class="md-raised md-primary">
+                Enviar Solicitud
+            </md-button>
+        <md-button  ng-click="log()" class="md-raised md-primary">
+            Enviar Solicitud
+        </md-button>
+        <!--</div>-->
+    </div>
+
+</div>

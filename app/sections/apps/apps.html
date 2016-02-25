@@ -1,8 +1,14 @@
 <md-card>
+    <div layout="row"layout-margin>
+        <md-icon flex="5" md-svg-src="resources/icons/ic_search.svg"></md-icon>
+        <input ng-model="filter" flex="95" placeholder="Buscar" style="border: 0" id="search"type="text">
+    </div>
+
     <md-table-container>
         <table md-table ng-model="selected" md-progress="promise">
             <thead md-head md-on-reorder="onReorder" md-order="order">
             <tr md-row>
+                <th md-column md-order-by="userData.firstname+userData.lastname1+userData.lastname2">Nombre</th>
                 <th md-column md-order-by="level">Nivel</th>
                 <th md-column md-order-by="applicationStatus">Status</th>
                 <th md-column md-order-by="uploadTimestamp">Fecha</th>
@@ -10,7 +16,8 @@
             </tr>
             </thead>
             <tbody md-body>
-            <tr md-row ng-repeat="app in applications|orderBy:order| limitTo: myLimit: (myPage - 1) * myLimit">
+            <tr md-row ng-repeat="app in applications |filter:filter |orderBy:order| limitTo: limit: (page - 1) * limit">
+                <td md-cell>{{app.userData.firstname+" "+app.userData.lastname1+" "+app.userData.lastname2}}</td>
                 <td md-cell>{{getType(app.level)}}</td>
                 <td md-cell>{{getStatus(app.applicationStatus)}}</td>
                 <td md-cell>{{formatDate(app.uploadTimestamp)}}</td>
@@ -23,8 +30,6 @@
             </tbody>
         </table>
     </md-table-container>
-
-    <md-table-pagination md-limit="myLimit" md-page="myPage" md-total="{{applications.count}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination>
-
+    <md-table-pagination ng-init="limit = 5;page = 1"md-limit="limit" md-page="page" md-total="{{applications.length}}"  md-page-select md-label="{page: 'Página:', rowsPerPage: 'Filas por página:', of: 'de'}"></md-table-pagination>
 </md-card>
 

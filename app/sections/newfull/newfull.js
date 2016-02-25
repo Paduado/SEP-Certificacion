@@ -1,44 +1,17 @@
 'use strict';
 
-angular.module('myApp.review', ['ngRoute']).config([
+angular.module('myApp.newfull', ['ngRoute']).config([
     '$routeProvider', function ($routeProvider)
     {
-        $routeProvider.when('/review/:appId', {
-            templateUrl: 'sections/review/review.html', controller: 'ReviewCtrl'
+        $routeProvider.when('/newfull', {
+            templateUrl: 'sections/newfull/newfull.html', controller: 'NewFullCtrl'
         });
     }
-]).controller('ReviewCtrl', function ($scope, $mdDialog,$route)
+]).controller('NewFullCtrl', function ($scope, $mdDialog)
 {
-
-    var docClient = new AWS.DynamoDB.DocumentClient();
-
-
-    var params = {
-        TableName: "applications",
-        Key:{
-            applicationID:$route.current.params.appId
-        }
-    };
-
-    docClient.get(params, function (err, data)
-    {
-        if (err)
-        {
-
-        } else
-        {
-            console.log(data);
-            $scope.application=data.Item;
-            $scope.$digest();
-        }
-    })
-
-    $scope.openFile = function(file)
-    {
-        window.open(file);
-    };
-
-
+    $scope.application = {};
+    $scope.application.docs = {};
+    $scope.application.userData = {};
     $scope.states = [
         {key: "01", name: "Aguascalientes"}, {key: "02", name: "Baja California"}, {
             key: "03", name: "Baja California Sur"
@@ -117,97 +90,96 @@ angular.module('myApp.review', ['ngRoute']).config([
     ];
 
 
-    $scope.accept =  function()
+
+    $scope.save = function()
     {
-        var docClient = new AWS.DynamoDB.DocumentClient();
-        var table = "applications";
-
-        var date = new Date().getTime();
-
-        // Update the item, unconditionally,
-
-        var params = {
-            TableName:table,
-            Key:{
-                "applicationID": $scope.application.applicationID
-            },
-            UpdateExpression: "set applicationStatus = :s, uploadTimestamp = :u",
-            ExpressionAttributeValues:{
-                ":s": 3,
-                ":u": date
-            },
-            ReturnValues:"UPDATED_NEW"
-        };
-
-        console.log("Updating the item...");
-        docClient.update(params, function(err, data) {
-            if (err) {
-                console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
-            } else {
-                $mdDialog.show(
-                    $mdDialog.alert()
-                    .parent(angular.element(document.querySelector('body')))
-                    .clickOutsideToClose(true)
-                    .title('Solicitud Aceptada')
-                    .ariaLabel('Alert Dialog Demo')
-                    .ok('Aceptar')
-                );
-                $scope.go('applications/search');
-                console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
-                go("/apps/search");
-            }
-        });
-
-
-
+        $scope.uploadApplication(1);
+    };
+    $scope.submit = function ()
+    {
+        $scope.uploadApplication(2);
     };
 
-    $scope.reject = function ()
+    $scope.uploadApplication = function(status)
     {
+
         var docClient = new AWS.DynamoDB.DocumentClient();
-        var table = "applications";
 
-        var date = new Date().getTime();
 
-        // Update the item, unconditionally,
+        $scope.application.uploadTimestamp = Math.floor(Date.now());
+        $scope.application.userID = localStorage.getItem("identityID");
+        $scope.application.applicationID = Math.floor(Date.now()).toString();
+        $scope.application.applicationStatus = status;
 
         var params = {
-            TableName: table, Key: {
-                "applicationID": $scope.application.applicationID
-            }, UpdateExpression: "set applicationStatus = :s, uploadTimestamp = :u", ExpressionAttributeValues: {
-                ":s": 4, ":u": date
-            }, ReturnValues: "UPDATED_NEW"
+            TableName: 'applications',
+            Item: $scope.application
         };
 
-        console.log("Updating the item...");
-        docClient.update(params, function (err, data)
+        docClient.put(params, function (err, data)
         {
             if (err)
             {
-                console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+                $mdDialog.show($mdDialog.alert().parent(angular.element(document.querySelector('body'))).clickOutsideToClose(true).title('Error al subir la solicitud').textContent('Alguno de los campos esta vacio o con un formato erroneo.').ariaLabel('Alert Dialog Demo').ok('Aceptar'));
+                console.log(err);
             } else
             {
-                $mdDialog.show($mdDialog.alert().parent(angular.element(document.querySelector('body'))).clickOutsideToClose(true).title('Solicitud Cancelada').ariaLabel('Alert Dialog Demo').ok('Aceptar'));
-                $scope.go('applications/search');
-                console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
-                go("/apps/search");
+                $mdDialog.show($mdDialog.alert().parent(angular.element(document.querySelector('body'))).clickOutsideToClose(true).title('Solicitud dada de alta').textContent('Aparecerá en el area de pendientes para su revisión.').ariaLabel('Alert Dialog Demo').ok('Aceptar'));
+                console.log(data);
             }
         });
+
+
     };
 
-    //$scope.generatePDF = function()
-    //{
-    //    var doc = new PDFDocument();
-    //    var stream = doc.pipe(blobStream());
-    //
-    //    doc.fontSize(25)
-    //    .text('Here is some vector graphics...', 100, 80);
-    //
-    //    doc.end();
-    //    stream.on('finish', function() {
-    //        var frame = document.getElementById("myframe");
-    //        frame.src = stream.toBlobURL('application/pdf');
-    //    });
-    //};
+    $scope.getUserData = function()
+    {
+
+    };
+
+    $scope.applicationIncomplete = function()
+    {
+
+        var missingDocs = false;
+
+        angular.forEach($scope.application.docs,function(value)
+        {
+            if(value == undefined)
+                missingDocs = true;
+        });
+        return $scope.form.$invalid || missingDocs;
+
+    };
+
+    $scope.test = function()
+    {
+        console.log($scope.docs);
+    }
+
+
+    $('#birthdate').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        onSelect: function (date)
+        {
+            var scope = angular.element($('#birthdate')).scope();
+            scope.$apply(function ()
+            {
+                scope.application.userData.birthdate = date;
+            });
+        }
+    });
+
+    $scope.log = function ()
+    {
+        console.log($scope.application);
+    };
 
 });
+
+
+
+
+
+
+

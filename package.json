@@ -38,7 +38,9 @@
     "angular-material-data-table": "^0.9.11",
     "aws-sdk": "^2.2.36",
     "aws-sdk-mobile-analytics": "^0.9.0",
+    "blob-stream": "^0.1.3",
     "browserify": "^13.0.0",
-    "font-awesome": "^4.5.0"
+    "font-awesome": "^4.5.0",
+    "pdfkit": "^0.7.2"
   }
 }

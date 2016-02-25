@@ -1,0 +1,35 @@
+.panel_container{
+    margin:3em;
+    width: calc(100% - 6em);
+
+}
+.btn_group_container{
+    margin:3em;
+
+}
+.selector{
+    width: 20em;
+    padding:1em;
+    margin: auto;
+}
+.custom-input{
+    display: block;
+    border: 0;
+    border-bottom: solid #AAA 1px;
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 2em;
+}
+select.custom-input{
+    border-radius: 0;
+    -webkit-appearance: none;
+    background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 90% 50%;
+}
+
+/*md-grid-list md-grid-tile figure{
+    display:block !important;
+    text-align: center;
+}*/
+
+
+
